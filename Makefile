@@ -11,6 +11,7 @@ BINARY_NAME=app
 
 .PHONY: all ./build clean
 
+all: clean build run
 
 build:
 	$(GOBUILD) -o $(BINARY_PATH)/$(BINARY_NAME) -i $(SOURCE_PATH)
@@ -22,4 +23,3 @@ run:
 clean:
 	$(GOCLEAN)
 	rm -r $(BINARY_PATH)
-	
