@@ -4,21 +4,20 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"util/dir"
 )
 
 var router *gin.Engine
 
 func main() {
+	var htmlToLoad = dir.ListDir("templates")
 	// Set the router as the default one provided by Gin
 	router = gin.Default()
 
 	// Process the templates at the start so that they don't have to be loaded
 	// from the disk again. This makes serving HTML pages very fast.
 	// router.LoadHTMLGlob("templates/*") -> don't working well with multilevel filestructure
-	router.LoadHTMLFiles("templates/index.html",
-		"templates/fragments/footer.html",
-		"templates/fragments/header.html",
-		"templates/fragments/menu.html")
+	router.LoadHTMLFiles(htmlToLoad...)
 
 	// Define the route for the index page and display the index.html template
 	// To start with, we'll use an inline route handler. Later on, we'll create
