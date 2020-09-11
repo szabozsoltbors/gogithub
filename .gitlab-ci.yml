@@ -1,0 +1,34 @@
+image: golang:1.15.1
+
+cache:
+  paths:
+    - /apt-cache
+    - /go/src/github.com
+    - /go/src/golang.org
+    - /go/src/google.golang.org
+    - /go/src/gopkg.in
+
+stages:
+  - build
+  # - test
+  # - report
+  # - deploy
+
+build:
+  stage: build
+  script: make build
+  artifacts:
+    paths:
+      - build
+    expire_in: 8 hours
+# test:
+#   stage: test
+#   script: make test
+
+# report:
+#   stage: report
+#   script: make doc
+
+# deploy:
+#   stage: deploy
+#   script: make deploy
