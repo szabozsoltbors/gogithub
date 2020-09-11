@@ -1,0 +1,5 @@
+{
+  "PROFILE": "dev",
+  "PORT": ":8081",
+  "LOGLEVEL": "debug"
+}

@@ -1,34 +1,27 @@
 package main
 
 import (
-	"net/http"
-
 	"github.com/gin-gonic/gin"
-	"gogin/src/internal/dir"
+
+	log "github.com/sirupsen/logrus"
+
+	"gogin/src/api/config"
 )
 
-var router *gin.Engine
-
 func main() {
-	var htmlToLoad = dir.ListDir("templates")
+	app := gin.Default()
 
-	router = gin.Default()
+	if config.InitEnv() != nil ||
+		config.InitLogger() != nil ||
+		config.InitRoutes(app) != nil {
+		return
+	}
 
-	// router.LoadHTMLGlob("templates/*") -> don't working well with multilevel filestructure
-	router.LoadHTMLFiles(htmlToLoad...)
+	log.WithFields(log.Fields{
+		"profile":       config.ENV.PROFILE,
+		"port":          config.ENV.PORT,
+		"logging level": config.ENV.LOGLEVEL,
+	}).Info("The application is configured:")
 
-	router.GET("/", func(c *gin.Context) {
-
-		c.HTML(
-			http.StatusOK,
-			"index.html",
-			gin.H{
-				"title": "Home Page",
-			},
-		)
-
-	})
-
-	router.Run()
-
+	app.Run(config.ENV.PORT)
 }

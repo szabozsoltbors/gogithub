@@ -1,14 +1,13 @@
-package dir
+package util
 
 import (
-	"fmt"
 	"os"
 	"path/filepath"
 )
 
-// ListDir - is a function wich returns an array
-// with all the filenames from a directory
-func ListDir(root string) []string {
+// ListDir - returns an array with all the filenames from a directory
+func ListDir(root string) ([]string, error) {
+
 	var files []string
 
 	err := filepath.Walk(root, func(path string, info os.FileInfo, err error) error {
@@ -18,12 +17,10 @@ func ListDir(root string) []string {
 		files = append(files, path)
 		return nil
 	})
+
 	if err != nil {
-		panic(err)
-	}
-	for _, file := range files {
-		fmt.Println(file)
+		return nil, err
 	}
 
-	return files
+	return files, nil
 }

@@ -9,7 +9,7 @@ A simple GO project with Gin web framework
 |──build                // Build folder for generated binaries
 |──src
 |   |──api              // Schema files, protocol definition files
-|   |──internal         // Private application and library code
+|   |──util             // Private application and library code
 |   |──web              // Web application specific components
 ```
 

@@ -1,7 +1,0 @@
-{
-  "go.toolsGopath": "/home/hume/gotools",
-  "go.autocompleteUnimportedPackages": true,
-  "go.inferGopath": true,
-  "go.formatTool": "gofmt",
-  "go.vetFlags": ["/src"]
-}

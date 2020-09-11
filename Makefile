@@ -9,6 +9,8 @@ SOURCE_PATH=./src
 BINARY_PATH=./build
 BINARY_NAME=app
 
+profile="prod"
+
 .PHONY: all ./build clean
 
 all: clean build run
@@ -16,10 +18,12 @@ all: clean build run
 build:
 	$(GOBUILD) -o $(BINARY_PATH)/$(BINARY_NAME) -i $(SOURCE_PATH)
 	cp -r $(SOURCE_PATH)/web/templates $(BINARY_PATH)/templates
+	cp -r $(SOURCE_PATH)/api/config/environments $(BINARY_PATH)/environments
 
 run:
-	cd $(BINARY_PATH); ./$(BINARY_NAME)
+	cd $(BINARY_PATH); ./$(BINARY_NAME) -profile=${profile}
 
 clean:
 	$(GOCLEAN)
 	rm -r $(BINARY_PATH)
+	mkdir build
