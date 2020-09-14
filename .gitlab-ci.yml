@@ -10,7 +10,7 @@ cache:
 
 stages:
   - build
-  # - test
+  - test
   # - report
   # - deploy
 
@@ -21,10 +21,10 @@ build:
     paths:
       - build
     expire_in: 8 hours
-# test:
-#   stage: test
-#   script: make test
 
+test:
+  stage: test
+  script: make test
 # report:
 #   stage: report
 #   script: make doc

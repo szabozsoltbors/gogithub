@@ -13,12 +13,15 @@ profile="prod"
 
 .PHONY: all ./build clean
 
-all: clean build run
+all: clean build test run
 
 build:
 	$(GOBUILD) -o $(BINARY_PATH)/$(BINARY_NAME) -i $(SOURCE_PATH)
 	cp -r $(SOURCE_PATH)/web/templates $(BINARY_PATH)/templates
 	cp -r $(SOURCE_PATH)/api/config/environments $(BINARY_PATH)/environments
+
+test:
+	$(GOTEST) $(SOURCE_PATH)/util -v
 
 run:
 	cd $(BINARY_PATH); ./$(BINARY_NAME) -profile=${profile}
