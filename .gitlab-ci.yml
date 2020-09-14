@@ -26,5 +26,20 @@ test:
   script: make test
 
 deploy:
+  image:
+    name: gcr.io/kaniko-project/executor:debug-v0.22.0
+    entrypoint: [""]
+  before_script:
+    - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
   stage: deploy
-  script: make deploy
+  # Auto-cancel pending pipelines must be enable on project settings
+  script:
+    - >
+      /kaniko/executor
+      --context $CI_PROJECT_DIR
+      --dockerfile $CI_PROJECT_DIR/Dockerfile
+      --cache=false
+      --cache-repo=$CI_REGISTRY_IMAGE/cache
+      --destination $CI_REGISTRY_IMAGE:latest
+  only:
+    - develop
